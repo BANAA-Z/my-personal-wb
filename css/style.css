@@ -7,14 +7,17 @@ html { scroll-behavior: smooth; }
 
 :root {
   --bg: #f5f7fa;
-  --card: #fff;
+  /* 浅色模式：半透明白，透明度 0.85 */
+  --card: rgba(255, 255, 255, 0.85);
   --text: #333;
   --border: #eee;
   --main: #409eff;
 }
+
 .dark {
   --bg: #12141d;
-  --card: #1e2230;
+  /* 深色模式：半透明深蓝，保持和浅色一样的透明度 0.85 */
+  --card: rgba(30, 34, 48, 0.85);
   --text: #eef;
   --border: #333;
 }
@@ -71,6 +74,9 @@ body {
   max-width: 900px;
   padding: 40px 30px;
 }
+
+
+
 
 /* 右侧个人信息卡片 */
 .right-profile {
@@ -134,10 +140,12 @@ body {
 
 /* 板块样式 & 滚动渐入动画 */
 .section {
-  background: var(--card);
+  /*  */
+   background: var(--card); 
+  
   border-radius: 14px;
   padding: 26px;
-  margin-bottom: 20px;
+  margin-bottom: 26px;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -475,4 +483,12 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}/* 给整个页面加背景图 */
+body {
+  background-image: url("../images/【哲风壁纸】ins风-咖啡店.png");
+  background-size: cover;         /* 铺满屏幕 */
+  background-position: center;    /* 居中 */
+  background-attachment: fixed;   /* 固定不滚动 */
+  background-repeat: no-repeat;   /* 不重复 */
 }
+
