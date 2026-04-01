@@ -59,8 +59,8 @@ const Notes = {
           id: 1,
           name: "前端",
           notes: [
-            { id: 1, title: 'Vue 组件化开发总结', date: '2026-03-20', file: 'note/note-vue.md' },
-            { id: 2, title: '前端个人学习笔记合集', date: '2026-03-28', file: 'note/前端个人学习笔记CSS.md' },
+            { id: 1, title: 'Vue 组件化开发总结', date: '2026-03-20', file: 'note/前端/note-vue.md' },
+            { id: 2, title: '前端个人学习笔记合集', date: '2026-03-28', file: 'note/前端/前端个人学习笔记CSS.md' },
             { id: 3, title: '滚动渐入与懒加载', date: '2026-03-25', file: 'note/note-intersection.md' },
           ]
         },
