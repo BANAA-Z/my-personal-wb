@@ -60,7 +60,7 @@ const app = createApp({
    toggleDark() {
   this.isDark = !this.isDark
   document.body.classList.toggle('dark', this.isDark)
-  // 👇 关键：把主题存到本地，笔记页才能同步
+  // 把主题存到本地，笔记同步
   localStorage.setItem('darkMode', this.isDark ? 'true' : 'false')
 },
     toTop() {
