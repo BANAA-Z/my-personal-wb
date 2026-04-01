@@ -3,13 +3,23 @@ const Notes = {
     <div class="section" id="notes">
       <h2 @click="toggle" :class="{ open: isOpen }">学习笔记</h2>
       <div class="content" :class="{ active: isOpen }">
-        <!-- 分类循环：只需改 data 里的数组 -->
+        <!-- 新增：搜索框 -->
+        <div class="search-box">
+          <input
+            type="text"
+            v-model="searchKeyword"
+            placeholder="🔍 搜索笔记（支持标题/分类）"
+            class="search-input"
+            @input="filterNotes"
+          />
+        </div>
+
+        <!-- 分类循环：支持搜索过滤 -->
         <div 
-          v-for="cat in categories" 
+          v-for="cat in filteredCategories" 
           :key="cat.id"
           class="category"
         >
-          <!-- 分类标题：用 :open 控制旋转 -->
           <h3 
             @click="toggleCat(cat.id)" 
             :class="{ open: catOpen[cat.id] }"
@@ -18,7 +28,6 @@ const Notes = {
             <span class="arrow">{{ catOpen[cat.id] ? '▼' : '▶' }}</span>
           </h3>
 
-          <!-- 分类笔记列表 -->
           <div class="category-items" :class="{ open: catOpen[cat.id] }">
             <div
               v-for="note in cat.notes"
@@ -31,14 +40,20 @@ const Notes = {
             </div>
           </div>
         </div>
+
+        <!-- 搜索无结果提示 -->
+        <div v-if="filteredCategories.length === 0" class="no-result">
+          😥 未找到相关笔记
+        </div>
       </div>
     </div>
   `,
   data() {
     return {
       isOpen: false,
-      
+      searchKeyword: '',
       catOpen: { 1: false, 2: false, 3: false },
+      // 原始分类数据（不动，只做过滤）
       categories: [
         {
           id: 1,
@@ -67,14 +82,36 @@ const Notes = {
       ]
     };
   },
+  computed: {
+    // 过滤后的分类数据（核心搜索逻辑）
+    filteredCategories() {
+      if (!this.searchKeyword.trim()) return this.categories;
+      
+      const keyword = this.searchKeyword.toLowerCase();
+      return this.categories
+        .map(cat => ({
+          ...cat,
+          // 过滤当前分类下的笔记
+          notes: cat.notes.filter(note => 
+            note.title.toLowerCase().includes(keyword) || 
+            cat.name.toLowerCase().includes(keyword)
+          )
+        }))
+        // 只保留有笔记的分类
+        .filter(cat => cat.notes.length > 0);
+    }
+  },
   methods: {
     toggle() { this.isOpen = !this.isOpen; },
-    
-    toggleCat(id) {
-      this.catOpen[id] = !this.catOpen[id];
-    },
+    toggleCat(id) { this.catOpen[id] = !this.catOpen[id]; },
     openNotePage(note) {
       window.open(`note-page.html?md=${note.file}&title=${encodeURIComponent(note.title)}`, '_blank');
+    },
+    filterNotes() {
+      // 搜索时自动展开所有分类，方便查看结果
+      Object.keys(this.catOpen).forEach(key => {
+        this.catOpen[key] = true;
+      });
     }
   }
 };

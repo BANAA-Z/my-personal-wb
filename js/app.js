@@ -23,6 +23,10 @@ const app = createApp({
       </div>
       <h4>BANAA‑Z</h4>
       <p>智能车辆｜意向前端</p>
+       <p class="stats">
+  总访问：<span id="cloud-pv">0</span> 次<br>
+  访客：<span id="cloud-uv">0</span> 人
+</p>
     </div>
 
     <!-- 右侧悬浮按钮 -->
